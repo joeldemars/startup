@@ -17,7 +17,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [ ] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
-- [ ] Description of key features
+- [x] Description of key features
 - [ ] Description of how you will use each technology
 - [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
@@ -40,9 +40,14 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Simple UI to select FFmpeg options
+- Expose FFmpeg functionality for image, audio, and video transcoding
+- Button to conveniently copy FFmpeg command to clipboard
+- Allow selection of containers, codecs, and quality
+- Allow saving useful commands to the user's account
+- Allow browsing commands others have made
+- Allow saving others' posts and seeing how many times each post has been saved
+- Show updates to FFmpeg codebase
 
 ### Technologies
 
