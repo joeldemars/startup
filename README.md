@@ -18,7 +18,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [ ] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
 - [x] Description of key features
-- [ ] Description of how you will use each technology
+- [x] Description of how you will use each technology
 - [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
@@ -53,12 +53,12 @@ sequenceDiagram
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Site layout and structure: main page, profile page, and community page, with apropriate links between them
+- **CSS** - Simple, responsive, and easy-to-read UI; generated FFmpeg command displayed in terminal-style section
+- **React** - Interactivity, e.g. for login, command generation, and viewing of saved commands
+- **Service** - Service backend supporting login, saving generated commands, saving community commands, and viewing codebase updates (3rd party)
+- **DB/Login** - Save users and their login info, as well as their saved commands, save how many times each command has been saved
+- **WebSocket** - Show in real time new commands that have been saved and updates to how many times
 
 ## 🚀 AWS deliverable
 
