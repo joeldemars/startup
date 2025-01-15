@@ -17,8 +17,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 - [x] Proper use of Markdown
 - [x] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
+- [x] Description of key features
+- [x] Description of how you will use each technology
 - [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
@@ -43,20 +43,25 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Simple UI to select FFmpeg options
+- Expose FFmpeg functionality for image, audio, and video transcoding
+- Button to conveniently copy FFmpeg command to clipboard
+- Allow selection of containers, codecs, and quality
+- Allow saving useful commands to the user's account
+- Allow browsing commands others have made
+- Allow saving others' posts and seeing how many times each post has been saved
+- Show updates to FFmpeg codebase
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Site layout and structure: main page, profile page, and community page, with apropriate links between them
+- **CSS** - Simple, responsive, and easy-to-read UI; generated FFmpeg command displayed in terminal-style section
+- **React** - Interactivity, e.g. for login, command generation, and viewing of saved commands
+- **Service** - Service backend supporting login, saving generated commands, saving community commands, and viewing codebase updates (3rd party)
+- **DB/Login** - Save users and their login info, as well as their saved commands, save how many times each command has been saved
+- **WebSocket** - Show in real time new commands that have been saved and updates to how many times
 
 ## 🚀 AWS deliverable
 
