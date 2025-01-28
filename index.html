@@ -16,7 +16,47 @@
             </menu>
         </nav>
     </header>
-    <main></main>
+    <main>
+        <select name='type'>
+            <option value='video'>Video</option>
+            <option value='audio'>Audio</option>
+            <option value='image'>Image</option>
+        </select>
+        <br />
+        <label for='infile'>Input file</label>
+        <input name='infile'></input>
+        <br />
+        <label for='container'>Container format</label>
+        <select name='container'>
+            <option value='mp4'>MP4</option>
+            <option value='mkv'>MKV</option>
+            <option value='webm'>WebM</option>
+        </select>
+        <br />
+        <label for='vcodec'>Video Codec</label>
+        <select name='vcodec'>
+            <option value='avc'>AVC</option>
+            <option value='hevc'>HEVC</option>
+            <option value='vp9'>VP9</option>
+            <option value='av1'>AV1</option>
+        </select>
+        <br />
+        <label for='acodec'>Audio Codec</label>
+        <select name='acodec'>
+            <option value='aac'>AAC</option>
+            <option value='opus'>Opus</option>
+            <option value='wav'>WAV</option>
+            <option value='flac'>FLAC</option>
+        </select>
+        <br />
+        <label for='outfile'>Output file</label>
+        <input name='outfile' /><span>.mp4</span>
+        <div>
+            <code>$ ffmpeg -i</code>
+            <button type='button'>Copy</button>
+        </div>
+        <button type='button'>Save Command</button>
+    </main>
     <footer>
         <p>FFmpeg Helper by Joel Demars <a href='https://github.com/joeldemars/startup'>Source</a> [PLACEHOLDER REPO BADGE] <a href='https://github.com/FFmpeg/FFmpeg'>FFmpeg source</a> [PLACEHOLDER REPO BADGE]</p>
     </footer>
