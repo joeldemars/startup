@@ -71,15 +71,15 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **HTML pages** - I did not complete this part of the deliverable.
-- [ ] **Proper HTML element usage** - I did not complete this part of the deliverable.
-- [ ] **Links** - I did not complete this part of the deliverable.
-- [ ] **Text** - I did not complete this part of the deliverable.
-- [ ] **3rd party API placeholder** - I did not complete this part of the deliverable.
-- [ ] **Images** - I did not complete this part of the deliverable.
-- [ ] **Login placeholder** - I did not complete this part of the deliverable.
-- [ ] **DB data placeholder** - I did not complete this part of the deliverable.
-- [ ] **WebSocket placeholder** - I did not complete this part of the deliverable.
+- [x] **HTML pages** - HTML pages for home (command generation), community command, saved commands, and login
+- [x] **Proper HTML element usage** - Semantic header, footer, and body; many HTML input elements; code blocks; etc.
+- [x] **Links** - Links to each page in navbar in header, links to source and FFmpeg in footer
+- [x] **Text** - Command descriptions on community and saved pages
+- [x] **3rd party API placeholder** - Placeholders for GitHub badges in footer
+- [x] **Images** - Site logo and favicon on all pages
+- [x] **Login placeholder** - Login page log in and sign up options
+- [x] **DB data placeholder** - Account and command storage on login and saved pages
+- [x] **WebSocket placeholder** - Real-time display of new commands on community page
 
 ## 🚀 CSS deliverable
 
