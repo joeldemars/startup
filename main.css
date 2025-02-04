@@ -1,0 +1,22 @@
+nav {
+    display: flex;
+}
+
+div.navbar-brand {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    margin: 0;
+}
+
+menu {
+    display: flex;
+    margin: 0;
+    flex-direction: row !important;
+    justify-content: space-around !important;
+    align-items: center;
+}
