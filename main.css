@@ -20,3 +20,24 @@ menu {
     justify-content: space-around !important;
     align-items: center;
 }
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-around; */
+    align-items: center;
+}
+
+footer span {
+    color: darkgray;
+}
