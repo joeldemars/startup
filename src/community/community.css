@@ -1,0 +1,16 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-rows: min-content;
+}
+
+.card {
+    max-width: 480px;
+    padding: 16px;
+    margin: 16px;
+}
+
+div button {
+    float: right;
+    margin: 8px;
+}
