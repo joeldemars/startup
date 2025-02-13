@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './community.css';
 
 const Community: React.FC = () => <main id="community">

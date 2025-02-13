@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './saved.css';
 
 const Saved: React.FC = () => <main id="saved">

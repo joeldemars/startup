@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './login.css';
 
 const Login: React.FC = () => <main id="login">

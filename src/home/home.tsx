@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import './home.css';
 
 const Home: React.FC = () => <main id="home">
