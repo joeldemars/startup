@@ -1,17 +1,17 @@
-main {
+main#home {
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
 
-main > div {
+.home-card {
     width: 100%;
     max-width: 1200px;
     padding: 16px;
 }
 
-div.card > span {
+.home-card > span {
     margin: 8px;
 }
 
@@ -21,7 +21,7 @@ span#mediaType {
     align-items: center;
 }
 
-div.code {
+.code {
     background-color: black;
     padding: 16px;
     display: flex;
@@ -29,17 +29,17 @@ div.code {
     justify-content: space-between;
 }
 
-input {
+.home-card input {
     width: 25%;
     float: right;
 }
 
-select {
+.home-card select {
     width: 25%;
     float: right;
 }
 
-button {
+.home-card button {
     width: fit-content;
     float: right;
 }

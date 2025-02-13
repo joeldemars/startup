@@ -2,8 +2,8 @@ import React from 'react';
 import './home.css';
 
 export default function Home() {
-    return <main>
-        <div className="card">
+    return <main id="home">
+        <div className="card home-card">
             <span id="mediaType">
                 <select name='type'>
                     <option value='video'>Video</option>
@@ -12,11 +12,11 @@ export default function Home() {
                 </select>
             </span>
             <span>
-                <label for='infile'>Input file</label>
+                <label htmlFor='infile'>Input file</label>
                 <input name='infile'></input>
             </span>
             <span>
-                <label for='container'>Container format</label>
+                <label htmlFor='container'>Container format</label>
                 <select name='container'>
                     <option value='mp4'>MP4</option>
                     <option value='mkv'>MKV</option>
@@ -24,7 +24,7 @@ export default function Home() {
                 </select>
             </span>
             <span>
-                <label for='vcodec'>Video Codec</label>
+                <label htmlFor='vcodec'>Video Codec</label>
                 <select name='vcodec'>
                     <option value='avc'>AVC</option>
                     <option value='hevc'>HEVC</option>
@@ -33,7 +33,7 @@ export default function Home() {
                 </select>
             </span>
             <span>
-                <label for='acodec'>Audio Codec</label>
+                <label htmlFor='acodec'>Audio Codec</label>
                 <select name='acodec'>
                     <option value='aac'>AAC</option>
                     <option value='opus'>Opus</option>
@@ -42,7 +42,7 @@ export default function Home() {
                 </select>
             </span>
             <span>
-                <label for='outfile'>Output file</label>
+                <label htmlFor='outfile'>Output file</label>
                 <input name='outfile' />
             </span>
             <div className="card code">

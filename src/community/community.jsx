@@ -2,8 +2,8 @@ import React from 'react';
 import './community.css';
 
 export default function Community() {
-    return <main>
-        <div className="card">
+    return <main id="community">
+        <div className="card command-card">
             <h4 className="card-title">Placeholder command 1</h4>
             <span className="card-subtitle">N saves</span>
             <p className="card-text">Description 1</p>
@@ -11,11 +11,11 @@ export default function Community() {
             <code>$ ffmpeg -i infile.mp4 outfile.webm</code>
             <br />
             <div>
-                <button type='button' className="btn btn-outline-light">Copy</button>
-                <button type='button' className="btn btn-outline-light">Save</button>
+                <button type='button' className="btn btn-outline-light card-button">Copy</button>
+                <button type='button' className="btn btn-outline-light card-button">Save</button>
             </div>
         </div>
-        <div className="card">
+        <div className="card command-card">
             <h4 className="card-title">Placeholder command 2</h4>
             <span className="card-subtitle">(M saves)</span>
             <p className="card-text">Description 2</p>
@@ -23,8 +23,8 @@ export default function Community() {
             <code>$ ffmpeg -i infile.webm outfile.mp4</code>
             <br />
             <div>
-                <button type='button' className="btn btn-outline-light">Copy</button>
-                <button type='button' className="btn btn-outline-light">Save</button>
+                <button type='button' className="btn btn-outline-light card-button">Copy</button>
+                <button type='button' className="btn btn-outline-light card-button">Save</button>
             </div>
         </div>
     </main>;
