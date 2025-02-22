@@ -21,7 +21,7 @@ type VideoCodec = "AVC" | "HEVC" | "VP9" | "AV1";
 type AudioCodec = "AAC" | "Opus" | "WAV" | "FLAC";
 
 
-class VideoOptions {
+export class VideoOptions {
     inputFile: string;
     container: Container;
     videoCodec: VideoCodec;

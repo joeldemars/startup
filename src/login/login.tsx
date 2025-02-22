@@ -4,7 +4,7 @@ import './login.css';
 const Login: React.FC = () => <main id="login">
     <div className="card login-card">
         <h2>Log In/Sign Up</h2>
-        <form method='GET' action='saved.html'>
+        <form method='POST'>
             <div>
                 <label htmlFor='email'>Email Address</label>
                 <br />
