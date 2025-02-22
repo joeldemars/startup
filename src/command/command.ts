@@ -1,13 +1,15 @@
 type CommandOptions = VideoOptions | AudioOptions | ImageOptions;
 
 export default class Command {
+    id: number;
     name: string;
     description: string;
     command: string;
     options: CommandOptions;
     saves: number;
 
-    constructor(name: string, description: string, command: string, options: CommandOptions, saves: number) {
+    constructor(id: number, name: string, description: string, command: string, options: CommandOptions, saves: number) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.command = command;
