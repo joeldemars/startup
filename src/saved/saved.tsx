@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Card from '../card/card';
-import Command from '../command/command';
+import {Command } from '../command/command';
 import './saved.css';
 
 const Saved: React.FC = () => {

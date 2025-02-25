@@ -6,7 +6,7 @@ import Home from './home/home';
 import Community from './community/community';
 import Saved from './saved/saved';
 import Login from './login/login';
-import Command from './command/command';
+// import Command from './command/command';
 import {VideoOptions} from './command/command';
 
 const App: React.FC = () => <BrowserRouter>

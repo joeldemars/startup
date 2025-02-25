@@ -1,26 +1,38 @@
 type CommandOptions = VideoOptions | AudioOptions | ImageOptions;
 
-export default class Command {
-    id: number;
-    name: string;
-    description: string;
-    command: string;
-    options: CommandOptions;
+export interface Command {
+    id: string;
+    title: string;
     saves: number;
-
-    constructor(id: number, name: string, description: string, command: string, options: CommandOptions, saves: number) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.command = command;
-        this.options = options;
-        this.saves = saves;
-    }
+    command: string;
+    infile: string;
+    container: Container;
+    acodec: AudioCodec;
+    vcodec: VideoCodec;
+    outfile: string;
 }
 
-type Container = "MP4" | "WebM" | "MKV";
-type VideoCodec = "AVC" | "HEVC" | "VP9" | "AV1";
-type AudioCodec = "AAC" | "Opus" | "WAV" | "FLAC";
+// export default class Command {
+//     id: number;
+//     name: string;
+//     description: string;
+//     command: string;
+//     options: CommandOptions;
+//     saves: number;
+
+//     constructor(id: number, name: string, description: string, command: string, options: CommandOptions, saves: number) {
+//         this.id = id;
+//         this.name = name;
+//         this.description = description;
+//         this.command = command;
+//         this.options = options;
+//         this.saves = saves;
+//     }
+// }
+
+export type Container = "mp4" | "webm" | "mkv";
+export type VideoCodec = "avc" | "hevc" | "vp9" | "av1";
+export type AudioCodec = "aac" | "opus" | "wav" | "flac";
 
 
 export class VideoOptions {
