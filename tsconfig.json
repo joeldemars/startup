@@ -2,5 +2,6 @@
   "compilerOptions": {
     "strict": true, 
     "jsx": "react-jsx",
+    "lib": ["ES6", "DOM"],
   },
 }
