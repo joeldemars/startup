@@ -6,6 +6,8 @@ import Home from './home/home';
 import Community from './community/community';
 import Saved from './saved/saved';
 import Login from './login/login';
+import Command from './command/command';
+import {VideoOptions} from './command/command';
 
 const App: React.FC = () => <BrowserRouter>
   <header>
@@ -23,7 +25,6 @@ const App: React.FC = () => <BrowserRouter>
     </nav>
   </header>
   <Routes>
-    <Route path="/" element={<Home />} />
     <Route path="/community" element={<Community />} />
     <Route path="/saved" element={<Saved />} />
     <Route path="/login" element={<Login />} />

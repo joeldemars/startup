@@ -1,57 +1,124 @@
 import * as React from 'react';
+import Command from '../command/command';
 import './home.css';
 
-const Home: React.FC = () => <main id="home">
-    <div className="card home-card">
-        <span id="mediaType">
-            <select name='type'>
-                <option value='video'>Video</option>
-                <option value='audio'>Audio</option>
-                <option value='image'>Image</option>
-            </select>
-        </span>
-        <span>
-            <label htmlFor='infile'>Input file</label>
-            <input name='infile'></input>
-        </span>
-        <span>
-            <label htmlFor='container'>Container format</label>
-            <select name='container'>
-                <option value='mp4'>MP4</option>
-                <option value='mkv'>MKV</option>
-                <option value='webm'>WebM</option>
-            </select>
-        </span>
-        <span>
-            <label htmlFor='vcodec'>Video Codec</label>
-            <select name='vcodec'>
-                <option value='avc'>AVC</option>
-                <option value='hevc'>HEVC</option>
-                <option value='vp9'>VP9</option>
-                <option value='av1'>AV1</option>
-            </select>
-        </span>
-        <span>
-            <label htmlFor='acodec'>Audio Codec</label>
-            <select name='acodec'>
-                <option value='aac'>AAC</option>
-                <option value='opus'>Opus</option>
-                <option value='wav'>WAV</option>
-                <option value='flac'>FLAC</option>
-            </select>
-        </span>
-        <span>
-            <label htmlFor='outfile'>Output file</label>
-            <input name='outfile' />
-        </span>
-        <div className="card code">
-            <code>$ ffmpeg -i</code>
-            <button type='button' className="btn btn-outline-light">Copy</button>
+interface HomeProps {
+    infile?: string;
+    container?: string;
+    vcodec?: string;
+    acodec?: string;
+    outfile?: string;
+}
+
+const Home: React.FC<HomeProps> = (props) => {
+    const [infile, updateInfile] = React.useState(props.infile ?? "");
+    const [container, updateContainer] = React.useState(props.container ?? "mp4");
+    const [vcodec, updateVcodec] = React.useState(props.vcodec ?? "avc");
+    const [acodec, updateAcodec] = React.useState(props.acodec ?? "aac");
+    const [outfile, updateOutfile] = React.useState(props.outfile ?? "");
+
+    const command = generateCommand(infile, container, vcodec, acodec, outfile);
+
+    return <main id="home">
+        <div className="card home-card">
+            <span>
+                <label htmlFor='infile'>Input file</label>
+                <input name='infile' value={infile} onChange={(event) => updateInfile(event.target.value)} />
+            </span>
+            <span>
+                <label htmlFor='container'>Container format</label>
+                <select name='container' value={container} onChange={(event) => updateContainer(event.target.value)}>
+                    <option value='mp4'>MP4</option>
+                    <option value='mkv'>MKV</option>
+                    <option value='webm'>WebM</option>
+                </select>
+            </span>
+            <span>
+                <label htmlFor='vcodec'>Video codec</label>
+                <select name='vcodec' value={vcodec} onChange={(event) => updateVcodec(event.target.value)}>
+                    <option value='avc'>AVC</option>
+                    <option value='hevc'>HEVC</option>
+                    <option value='vp9'>VP9</option>
+                    <option value='av1'>AV1</option>
+                </select>
+            </span>
+            <span>
+                <label htmlFor='acodec'>Audio codec</label>
+                <select name='acodec' value={acodec} onChange={(event) => updateAcodec(event.target.value)}>
+                    <option value='aac'>AAC</option>
+                    <option value='opus'>Opus</option>
+                    <option value='wav'>WAV</option>
+                    <option value='flac'>FLAC</option>
+                </select>
+            </span>
+            <span>
+                <label htmlFor='outfile'>Output file</label>
+                <div className="outfile-extension">
+                    <input name='outfile' value={outfile} onChange={(event) => updateOutfile(event.target.value)} />
+                    .{container}
+                </div>
+            </span>
+            <div className="card code">
+                <code>$ {command}</code>
+                <button type='button' className="btn btn-outline-light" onClick={() => navigator.clipboard.writeText(command)}>Copy</button>
+            </div>
+            <span>
+                <button type='button' className="btn btn-outline-light">Save Command</button>
+            </span>
         </div>
-        <span>
-            <button type='button' className="btn btn-outline-light">Save Command</button>
-        </span>
-    </div>
-</main>;
+    </main>
+};
 
 export default Home;
+
+function generateCommand(infile: string, container: string, vcodec: string, acodec: string, outfile: string): string {
+    let command = "ffmpeg ";
+
+    if (infile == "") {
+        command += "<input file> ";
+    } else if (/ /.test(infile)) {
+        command += "'" + infile + "' ";
+    } else {
+        command += infile + " ";
+    }
+
+    switch (vcodec) {
+        case "avc":
+            command += "-c:v libx264 ";
+            break;
+        case "hevc":
+            command += "-c:v libx265 ";
+            break;
+        case "vp9":
+            command += "-c:v libvpx-vp9 ";
+            break;
+        case "av1":
+            command += "-c:v libaom-av1 ";
+            break;
+    }
+
+    switch (acodec) {
+        case "aac":
+            command += "-c:a aac ";
+            break;
+        case "opus":
+            command += "-c:a libopus ";
+            break;
+        case "wav":
+            command += "-c:a pcm_s16le ";
+            break;
+        case "flac":
+            command += "-c:a flac ";
+            break;
+    }
+
+    if (outfile == "") {
+        command += "<output file>." + container;
+    } else if (/ /.test(outfile)) {
+        command += "'" + outfile + "." + container + "'";
+    } else {
+        command += outfile + "." + container;
+    }
+
+    return command;
+}
