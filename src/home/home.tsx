@@ -8,6 +8,7 @@ interface HomeProps {
     vcodec?: VideoCodec;
     acodec?: AudioCodec;
     outfile?: string;
+    loggedIn: boolean;
 }
 
 const Home: React.FC<HomeProps> = (props) => {
@@ -20,6 +21,10 @@ const Home: React.FC<HomeProps> = (props) => {
     const command = generateCommand(infile, container, vcodec, acodec, outfile);
 
     const saveCommand = () => {
+        if (!props.loggedIn) {
+            alert("Sign in to save commands");
+            return;
+        }
         let title = prompt("Input name for saved command");
         if (prompt == null) return;
         let commands: Command[] = JSON.parse(localStorage.getItem("userCommands") ?? "[]");

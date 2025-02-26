@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './login.css';
 
 interface Account {
@@ -6,9 +7,31 @@ interface Account {
     password: string,
 }
 
-const Login: React.FC<Account | {}> = (props) => {
-    const [email, updateEmail] = React.useState((props as Account).email ?? "");
-    const [password, updatePassword] = React.useState((props as Account).password ?? "");
+interface LoginProps {
+    callback: () => void,
+}
+
+const Login: React.FC<LoginProps> = ({callback}) => {
+    const [email, updateEmail] = React.useState("");
+    const [password, updatePassword] = React.useState("");
+
+    const navigate = useNavigate();
+
+    const tryCreateAccount = (email: string, password: string) => {
+        if (createAccount(email, password)) {
+            if (logIn(email, password)) {
+                callback();
+                navigate("..");
+            }
+        }
+    };
+
+    const tryLogIn = (email: string, password: string) => {
+        if (logIn(email, password)) {
+            callback();
+            navigate("..");
+        }
+    };
 
     return <main id="login">
         <div className="card login-card">
@@ -25,38 +48,43 @@ const Login: React.FC<Account | {}> = (props) => {
                     <input className="login-text" type='password' name='password' value={password} onChange={(event) => updatePassword(event.target.value)}/>
                 </div>
                 <div className="login-buttons">
-                    <input type='submit' value='Create Account' className="btn btn-outline-light login-button" onClick={() => createAccount(email, password)}/>
-                    <input type='submit' value='Sign In' className="btn btn-outline-light login-button" />
+                    <input type='submit' value='Create Account' className="btn btn-outline-light login-button" onClick={() => tryCreateAccount(email, password)}/>
+                    <input type='submit' value='Log In' className="btn btn-outline-light login-button" onClick={() => tryLogIn(email, password)} />
                 </div>
             </div>
         </div>
     </main>;
 }
 
-function createAccount(email: string, password: string) {
+function createAccount(email: string, password: string): boolean {
     let accounts: Account[] = JSON.parse(localStorage.getItem("accounts") ?? "[]");
     if (accounts.some((account) => account.email == email)) {
         alert("A user has already registered with the given email address");
+        return false;
     } else {
         accounts.push({
             email: email,
             password: password,
         });
         localStorage.setItem("accounts", JSON.stringify(accounts));
+        return true;
     }
 }
 
-function logIn(email: string, password: string) {
+function logIn(email: string, password: string): boolean {
     let accounts: Account[] = JSON.parse(localStorage.getItem("accounts") ?? "[]");
     let account = accounts.find((account) => account.email == email);
     if (account != null) {
         if (account.password != password) {
             alert("Password incorrect");
+            return false;
         } else {
             localStorage.setItem("loggedIn", "true");
+            return true;
         }
     } else {
         alert("Email not found");
+        return true;
     }
 }
 
