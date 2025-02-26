@@ -5,12 +5,6 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface HomeProps {
     user: string | null;
-    // infile?: string;
-    // container?: Container;
-    // vcodec?: VideoCodec;
-    // acodec?: AudioCodec;
-    // outfile?: string;
-    // loggedIn: boolean;
 }
 
 const Home: React.FC<HomeProps> = ({user}) => {
@@ -52,7 +46,7 @@ const Home: React.FC<HomeProps> = ({user}) => {
 
         let commands: Command[] = JSON.parse(localStorage.getItem("userCommands") ?? "[]");
         let index = commands.findIndex((command) => command.id == id);
-        if (index == null) {
+        if (index == -1) {
             commands.push(newCommand);
         } else {
             commands[index] = newCommand;
@@ -114,7 +108,7 @@ const Home: React.FC<HomeProps> = ({user}) => {
 export default Home;
 
 function generateCommand(infile: string, container: string, vcodec: string, acodec: string, outfile: string): string {
-    let command = "ffmpeg ";
+    let command = "ffmpeg -i ";
 
     if (infile == "") {
         command += "<input file> ";

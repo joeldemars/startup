@@ -1,4 +1,4 @@
-type CommandOptions = VideoOptions | AudioOptions | ImageOptions;
+// type CommandOptions = VideoOptions | AudioOptions | ImageOptions;
 
 export interface Command {
     id: string;
@@ -36,46 +36,46 @@ export type VideoCodec = "avc" | "hevc" | "vp9" | "av1";
 export type AudioCodec = "aac" | "opus" | "wav" | "flac";
 
 
-export class VideoOptions {
-    inputFile: string;
-    container: Container;
-    videoCodec: VideoCodec;
-    audioCodec: AudioCodec;
-    outputFile: string;
+// export class VideoOptions {
+//     inputFile: string;
+//     container: Container;
+//     videoCodec: VideoCodec;
+//     audioCodec: AudioCodec;
+//     outputFile: string;
 
-    constructor(inputFile: string, container: Container, videoCodec: VideoCodec, audioCodec: AudioCodec, outputFile: string) {
-        this.inputFile = inputFile;
-        this.container = container;
-        this.videoCodec = videoCodec;
-        this.audioCodec = audioCodec;
-        this.outputFile = outputFile;
-    }
-}
+//     constructor(inputFile: string, container: Container, videoCodec: VideoCodec, audioCodec: AudioCodec, outputFile: string) {
+//         this.inputFile = inputFile;
+//         this.container = container;
+//         this.videoCodec = videoCodec;
+//         this.audioCodec = audioCodec;
+//         this.outputFile = outputFile;
+//     }
+// }
 
-type AudioFormat = "MP3" | "Opus" | "M4A" | "WAV" | "FLAC";
+// type AudioFormat = "MP3" | "Opus" | "M4A" | "WAV" | "FLAC";
 
-class AudioOptions {
-    inputFile: string;
-    audioFormat: AudioFormat;
-    outputFile: string;
+// class AudioOptions {
+//     inputFile: string;
+//     audioFormat: AudioFormat;
+//     outputFile: string;
 
-    constructor(inputFile: string, audioFormat: AudioFormat, outputFile: string) {
-        this.inputFile = inputFile;
-        this.audioFormat = audioFormat;
-        this.outputFile = outputFile;
-    }
-}
+//     constructor(inputFile: string, audioFormat: AudioFormat, outputFile: string) {
+//         this.inputFile = inputFile;
+//         this.audioFormat = audioFormat;
+//         this.outputFile = outputFile;
+//     }
+// }
 
-type ImageFormat = "JPEG" | "PNG" | "WebP" | "AVIF";
+// type ImageFormat = "JPEG" | "PNG" | "WebP" | "AVIF";
 
-class ImageOptions {
-    inputFile: string;
-    imageFormat: ImageFormat;
-    outputFile: string;
+// class ImageOptions {
+//     inputFile: string;
+//     imageFormat: ImageFormat;
+//     outputFile: string;
     
-    constructor(inputFile: string, imageFormat: ImageFormat, outputFile: string) {
-        this.inputFile = inputFile;
-        this.imageFormat = imageFormat;
-        this.outputFile = outputFile;
-    }
-}
+//     constructor(inputFile: string, imageFormat: ImageFormat, outputFile: string) {
+//         this.inputFile = inputFile;
+//         this.imageFormat = imageFormat;
+//         this.outputFile = outputFile;
+//     }
+// }

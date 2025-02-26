@@ -79,12 +79,11 @@ function logIn(email: string, password: string): boolean {
             alert("Password incorrect");
             return false;
         } else {
-            localStorage.setItem("loggedIn", "true");
             return true;
         }
     } else {
         alert("Email not found");
-        return true;
+        return false;
     }
 }
 

@@ -28,15 +28,15 @@ const App: React.FC = () => {
           <NavLink className="nav-link" to="saved">Saved</NavLink>
           { 
             user == null 
-              ? <NavLink className="nav-link" to="login" onClick={() => updateUser(null)}>Log Out</NavLink>
-              : <NavLink className="nav-link" to="login">Log In</NavLink>
+              ? <NavLink className="nav-link" to="login">Log In</NavLink>
+              : <NavLink className="nav-link" to="login" onClick={() => updateUser(null)}>Log Out</NavLink>
           }
         </menu>
       </nav>
     </header>
     <Routes>
       <Route path="/community" element={<Community />} />
-      <Route path="/saved" element={<Saved />} />
+      <Route path="/saved" element={<Saved user={user} />} />
       <Route path="/login" element={<Login callback={(user: string) => updateUser(user)} />} />
       <Route path="*" element={<Home user={user} />} />
     </Routes>
