@@ -13,7 +13,7 @@ interface Account {
 }
 
 const App: React.FC = () => {
-  const [loggedIn, updateLoggedIn] = React.useState(false);
+  const [user, updateUser] = React.useState<string|null>(null);
 
   return <BrowserRouter>
     <header>
@@ -27,8 +27,8 @@ const App: React.FC = () => {
           <NavLink className="nav-link" to="community">Community</NavLink>
           <NavLink className="nav-link" to="saved">Saved</NavLink>
           { 
-            loggedIn 
-              ? <NavLink className="nav-link" to="login" onClick={() => updateLoggedIn(false)}>Log Out</NavLink>
+            user == null 
+              ? <NavLink className="nav-link" to="login" onClick={() => updateUser(null)}>Log Out</NavLink>
               : <NavLink className="nav-link" to="login">Log In</NavLink>
           }
         </menu>
@@ -37,8 +37,8 @@ const App: React.FC = () => {
     <Routes>
       <Route path="/community" element={<Community />} />
       <Route path="/saved" element={<Saved />} />
-      <Route path="/login" element={<Login callback={() => updateLoggedIn(true)} />} />
-      <Route path="*" element={<Home loggedIn={loggedIn} />} />
+      <Route path="/login" element={<Login callback={(user: string) => updateUser(user)} />} />
+      <Route path="*" element={<Home user={user} />} />
     </Routes>
     <footer>
       <span>

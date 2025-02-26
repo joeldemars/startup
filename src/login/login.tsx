@@ -8,7 +8,7 @@ interface Account {
 }
 
 interface LoginProps {
-    callback: () => void,
+    callback: (user: string) => void,
 }
 
 const Login: React.FC<LoginProps> = ({callback}) => {
@@ -20,16 +20,16 @@ const Login: React.FC<LoginProps> = ({callback}) => {
     const tryCreateAccount = (email: string, password: string) => {
         if (createAccount(email, password)) {
             if (logIn(email, password)) {
-                callback();
-                navigate("..");
+                callback(email);
+                navigate("/home");
             }
         }
     };
 
     const tryLogIn = (email: string, password: string) => {
         if (logIn(email, password)) {
-            callback();
-            navigate("..");
+            callback(email);
+            navigate("/home");
         }
     };
 
@@ -40,12 +40,12 @@ const Login: React.FC<LoginProps> = ({callback}) => {
                 <div>
                     <label htmlFor='email'>Email Address</label>
                     <br />
-                    <input className="login-text" type='email' name='email' value={email} onChange={(event) => updateEmail(event.target.value)}/>
+                    <input className="login-text" type='email' id='email' value={email} onChange={(event) => updateEmail(event.target.value)}/>
                 </div>
                 <div>
                     <label htmlFor='password'>Password</label>
                     <br />
-                    <input className="login-text" type='password' name='password' value={password} onChange={(event) => updatePassword(event.target.value)}/>
+                    <input className="login-text" type='password' id='password' value={password} onChange={(event) => updatePassword(event.target.value)}/>
                 </div>
                 <div className="login-buttons">
                     <input type='submit' value='Create Account' className="btn btn-outline-light login-button" onClick={() => tryCreateAccount(email, password)}/>

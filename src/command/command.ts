@@ -3,6 +3,7 @@ type CommandOptions = VideoOptions | AudioOptions | ImageOptions;
 export interface Command {
     id: string;
     title: string;
+    author: string;
     saves: number;
     command: string;
     infile: string;

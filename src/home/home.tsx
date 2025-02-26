@@ -1,56 +1,75 @@
 import * as React from 'react';
 import { Command, Container, AudioCodec, VideoCodec } from '../command/command';
 import './home.css';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface HomeProps {
-    infile?: string;
-    container?: Container;
-    vcodec?: VideoCodec;
-    acodec?: AudioCodec;
-    outfile?: string;
-    loggedIn: boolean;
+    user: string | null;
+    // infile?: string;
+    // container?: Container;
+    // vcodec?: VideoCodec;
+    // acodec?: AudioCodec;
+    // outfile?: string;
+    // loggedIn: boolean;
 }
 
-const Home: React.FC<HomeProps> = (props) => {
-    const [infile, updateInfile] = React.useState<string>(props.infile ?? "");
-    const [container, updateContainer] = React.useState<Container>(props.container ?? "mp4");
-    const [vcodec, updateVcodec] = React.useState<VideoCodec>(props.vcodec ?? "avc");
-    const [acodec, updateAcodec] = React.useState<AudioCodec>(props.acodec ?? "aac");
-    const [outfile, updateOutfile] = React.useState<string>(props.outfile ?? "");
+const Home: React.FC<HomeProps> = ({user}) => {
+    const [params] = useSearchParams();
+    const navigate = useNavigate();
+
+    const [infile, updateInfile] = React.useState(params.get("infile") ?? "");
+    const [container, updateContainer] = React.useState(params.get("container") as Container ?? "mp4");
+    const [vcodec, updateVcodec] = React.useState(params.get("vcodec") as VideoCodec ?? "avc");
+    const [acodec, updateAcodec] = React.useState(params.get("acodec") as AudioCodec ?? "aac");
+    const [outfile, updateOutfile] = React.useState(params.get("outfile") ?? "");
 
     const command = generateCommand(infile, container, vcodec, acodec, outfile);
 
     const saveCommand = () => {
-        if (!props.loggedIn) {
+        if (user == null) {
             alert("Sign in to save commands");
             return;
         }
-        let title = prompt("Input name for saved command");
-        if (prompt == null) return;
-        let commands: Command[] = JSON.parse(localStorage.getItem("userCommands") ?? "[]");
-        commands.push({
-            id: crypto.randomUUID().toString(),
-            title: title!,
-            saves: 0,
+
+        let id = params.get("id");
+        let title = params.get("title") ?? prompt("Input name for saved command");
+        let saves = parseInt(params.get("saves") ?? "0");
+
+        if (title == null) return;
+
+        let newCommand = {
+            id: id ?? crypto.randomUUID().toString(),
+            author: user,
+            title: title,
+            saves: saves,
             command: command,
             infile: infile,
             container: container,
             acodec: acodec,
             vcodec: vcodec,
             outfile: outfile,
-        });
+        };
+
+        let commands: Command[] = JSON.parse(localStorage.getItem("userCommands") ?? "[]");
+        let index = commands.findIndex((command) => command.id == id);
+        if (index == null) {
+            commands.push(newCommand);
+        } else {
+            commands[index] = newCommand;
+        }
         localStorage.setItem("userCommands", JSON.stringify(commands));
+        navigate("/saved");
     }
 
     return <main id="home">
         <div className="card home-card">
             <span>
                 <label htmlFor='infile'>Input file</label>
-                <input name='infile' value={infile} onChange={(event) => updateInfile(event.target.value)} />
+                <input id='infile' value={infile} onChange={(event) => updateInfile(event.target.value)} />
             </span>
             <span>
                 <label htmlFor='container'>Container format</label>
-                <select name='container' value={container} onChange={(event) => updateContainer(event.target.value as Container)}>
+                <select id='container' value={container} onChange={(event) => updateContainer(event.target.value as Container)}>
                     <option value='mp4'>MP4</option>
                     <option value='mkv'>MKV</option>
                     <option value='webm'>WebM</option>
@@ -58,7 +77,7 @@ const Home: React.FC<HomeProps> = (props) => {
             </span>
             <span>
                 <label htmlFor='vcodec'>Video codec</label>
-                <select name='vcodec' value={vcodec} onChange={(event) => updateVcodec(event.target.value as VideoCodec)}>
+                <select id='vcodec' value={vcodec} onChange={(event) => updateVcodec(event.target.value as VideoCodec)}>
                     <option value='avc'>AVC</option>
                     <option value='hevc'>HEVC</option>
                     <option value='vp9'>VP9</option>
@@ -67,7 +86,7 @@ const Home: React.FC<HomeProps> = (props) => {
             </span>
             <span>
                 <label htmlFor='acodec'>Audio codec</label>
-                <select name='acodec' value={acodec} onChange={(event) => updateAcodec(event.target.value as AudioCodec)}>
+                <select id='acodec' value={acodec} onChange={(event) => updateAcodec(event.target.value as AudioCodec)}>
                     <option value='aac'>AAC</option>
                     <option value='opus'>Opus</option>
                     <option value='wav'>WAV</option>
@@ -77,7 +96,7 @@ const Home: React.FC<HomeProps> = (props) => {
             <span>
                 <label htmlFor='outfile'>Output file</label>
                 <div className="outfile-extension">
-                    <input name='outfile' value={outfile} onChange={(event) => updateOutfile(event.target.value)} />
+                    <input id='outfile' value={outfile} onChange={(event) => updateOutfile(event.target.value)} />
                     .{container}
                 </div>
             </span>
