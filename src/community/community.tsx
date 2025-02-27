@@ -1,31 +1,49 @@
 import * as React from 'react';
+import { CommunityCard } from '../card/card';
 import './community.css';
+import { Command } from '../command/command';
 
-const Community: React.FC = () => <main id="community">
-    <div className="card command-card">
-        <h4 className="card-title">Placeholder command 1</h4>
-        <span className="card-subtitle">N saves</span>
-        <p className="card-text">Description 1</p>
-        <hr />
-        <code>$ ffmpeg -i infile.mp4 outfile.webm</code>
-        <br />
-        <div>
-            <button type='button' className="btn btn-outline-light card-button">Copy</button>
-            <button type='button' className="btn btn-outline-light card-button">Save</button>
-        </div>
-    </div>
-    <div className="card command-card">
-        <h4 className="card-title">Placeholder command 2</h4>
-        <span className="card-subtitle">(M saves)</span>
-        <p className="card-text">Description 2</p>
-        <hr />
-        <code>$ ffmpeg -i infile.webm outfile.mp4</code>
-        <br />
-        <div>
-            <button type='button' className="btn btn-outline-light card-button">Copy</button>
-            <button type='button' className="btn btn-outline-light card-button">Save</button>
-        </div>
-    </div>
-</main>;
+interface CommunityProps {
+    user: string | null;
+}
+
+const Community: React.FC<CommunityProps> = ({ user }) => {
+    const [commands, updateCommands] = React.useState(JSON.parse(localStorage.getItem("commands") ?? "[]"));
+
+    function generateRandomCommands(): number {
+        return setInterval(() => {
+            let commands: Command[] = JSON.parse(localStorage.getItem("commands") ?? "[]");
+            commands.push({
+                id: crypto.randomUUID().toString(),
+                title: `Generated Command ${commands.length}`,
+                author: "Random",
+                saves: 0,
+                command: "ffmpeg -i in.mp4 out.mp4",
+                infile: "in.mp4",
+                container: "mp4",
+                acodec: "aac",
+                vcodec: "avc",
+                outfile: "out",
+            });
+            localStorage.setItem("commands", JSON.stringify(commands));
+            updateCommands(commands);
+        }, 5000);
+    }
+
+    React.useEffect(() => {
+        let interval = generateRandomCommands();
+        return () => clearInterval(interval);
+    });
+
+    return <main id="community">
+        {commands.map((command: Command) => <CommunityCard key={command.id} {...command} user={user} />)}
+    </main>;
+}
+
+function generateRandomCommands() {
+    setInterval(() => {
+
+    }, 5000);
+}
 
 export default Community;

@@ -44,14 +44,14 @@ const Home: React.FC<HomeProps> = ({user}) => {
             outfile: outfile,
         };
 
-        let commands: Command[] = JSON.parse(localStorage.getItem("userCommands") ?? "[]");
+        let commands: Command[] = JSON.parse(localStorage.getItem("commands") ?? "[]");
         let index = commands.findIndex((command) => command.id == id);
         if (index == -1) {
             commands.push(newCommand);
         } else {
             commands[index] = newCommand;
         }
-        localStorage.setItem("userCommands", JSON.stringify(commands));
+        localStorage.setItem("commands", JSON.stringify(commands));
         navigate("/saved");
     }
 

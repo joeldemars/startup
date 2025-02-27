@@ -35,7 +35,7 @@ const App: React.FC = () => {
       </nav>
     </header>
     <Routes>
-      <Route path="/community" element={<Community />} />
+      <Route path="/community" element={<Community user={user} />} />
       <Route path="/saved" element={<Saved user={user} />} />
       <Route path="/login" element={<Login callback={(user: string) => updateUser(user)} />} />
       <Route path="*" element={<Home user={user} />} />
