@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CommunityCard } from '../card/card';
+import { Card } from '../card/card';
 import './community.css';
 import { Command } from '../command/command';
 
@@ -36,7 +36,7 @@ const Community: React.FC<CommunityProps> = ({ user }) => {
     });
 
     return <main id="community">
-        {commands.map((command: Command) => <CommunityCard key={command.id} {...command} user={user} />)}
+        {commands.map((command: Command) => <Card key={command.id} {...command} user={user} />)}
     </main>;
 }
 

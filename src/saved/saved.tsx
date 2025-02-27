@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { SavedCard } from '../card/card';
-import {Command } from '../command/command';
+import { Card } from '../card/card';
+import { Command } from '../command/command';
 import './saved.css';
 
 interface SavedProps {
     user: string | null;
 }
 
-const Saved: React.FC<SavedProps> = ({user}) => {
+const Saved: React.FC<SavedProps> = ({ user }) => {
     const [commands, updateCommands] = React.useState(getUserCommands(user));
 
     function saveRandomCommands(): number {
@@ -30,7 +30,7 @@ const Saved: React.FC<SavedProps> = ({user}) => {
     })
 
     return <main id="saved">
-        {commands.map((command) => <SavedCard key={command.id} {...command} />)}
+        {commands.map((command) => <Card key={command.id} {...command} user={user} />)}
     </main>;
 }
 

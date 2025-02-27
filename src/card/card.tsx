@@ -1,25 +1,8 @@
 import * as React from 'react';
 import { AudioCodec, Command, Container, VideoCodec } from '../command/command';
 import { useNavigate } from 'react-router-dom';
-// import './card.css';
 
-export const SavedCard: React.FC<Command> = (command) => {
-    const navigate = useNavigate();
-
-    return <div className="card command-card">
-        <h4 className="card-title">{command.title}</h4>
-        <p>{command.saves == 1 ? "1 save" : command.saves + " saves"}</p>
-        <hr />
-        <code>$ {command.command}</code>
-        <br />
-        <div>
-            <button type='button' className="btn btn-outline-light card-button" onClick={() => navigator.clipboard.writeText(command.command)}>Copy</button>
-            <button type='button' className="btn btn-outline-light card-button" onClick={() => navigate("home" + toQueryParameters(command))}>Edit</button>
-        </div>
-    </div>;
-}
-
-interface CommunityCardProps {
+interface CardProps {
     id: string;
     title: string;
     author: string;
@@ -33,14 +16,7 @@ interface CommunityCardProps {
     user: string | null;
 }
 
-export const CommunityCard: React.FC<CommunityCardProps> = (props) => {
-    const navigate = useNavigate();
-
-    const saveCardAction: (command: Command) => void = (command) => {
-        saveCard(command, props.user);
-        navigate("/saved");
-    }
-
+export const Card: React.FC<CardProps> = (props) => {
     return <div className="card command-card">
         <h4 className="card-title">{props.title}</h4>
         <p>{props.saves == 1 ? "1 save" : props.saves + " saves"}</p>
@@ -48,35 +24,58 @@ export const CommunityCard: React.FC<CommunityCardProps> = (props) => {
         <code>$ {props.command}</code>
         <br />
         <div>
-            <button type='button' className="btn btn-outline-light card-button" onClick={() => navigator.clipboard.writeText(props.command)}>Copy</button>
-            <button type='button' className="btn btn-outline-light card-button" onClick={() => saveCardAction(props)}>Save</button>
+            <button
+                type='button'
+                className="btn btn-outline-light card-button"
+                onClick={() => navigator.clipboard.writeText(props.command)}
+            >
+                Copy
+            </button>
+            {
+                props.user == null
+                    ? <EditButton {...props} />
+                    : <SaveButton {...props} />
+            }
         </div>
     </div>;
 }
 
-// const Card: React.FC<Command> = (command) => {
-//     const navigate = useNavigate();
+const EditButton: React.FC<Command> = (command) => {
+    const navigate = useNavigate();
 
-//     return <div className="card command-card">
-//         <h4 className="card-title">{command.title}</h4>
-//         <p>{command.saves == 1 ? "1 save" : command.saves + " saves"}</p>
-//         <hr />
-//         <code>$ {command.command}</code>
-//         <br />
-//         <div>
-//             <button type='button' className="btn btn-outline-light card-button" onClick={() => navigator.clipboard.writeText(command.command)}>Copy</button>
-//             <button type='button' className="btn btn-outline-light card-button" onClick={() => navigate("home" + toQueryParameters(command))}>Edit</button>
-//         </div>
-//     </div>;
-// }
+    return <button
+        type='button'
+        className="btn btn-outline-light card-button"
+        onClick={() => navigate("home" + toQueryParameters(command))}
+    >
+        Edit
+    </button>;
+}
+
+const SaveButton: React.FC<CardProps> = (props) => {
+    const navigate = useNavigate();
+
+    const saveCardAction = (command: Command) => {
+        saveCard(command, props.user);
+        navigate("/saved");
+    }
+
+    return <button
+        type='button'
+        className="btn btn-outline-light card-button"
+        onClick={() => saveCardAction(props)}
+    >
+        Save
+    </button>;
+}
 
 function toQueryParameters(command: Command): string {
     return `?id=${command.id}&title=${command.title}&saves=${command.saves}`
-    + `&command=${command.command}&infile=${command.infile}&container=${command.container}`
-    + `&acodec=${command.acodec}&vcodec=${command.vcodec}&outfile=${command.outfile}`;
+        + `&command=${command.command}&infile=${command.infile}&container=${command.container}`
+        + `&acodec=${command.acodec}&vcodec=${command.vcodec}&outfile=${command.outfile}`;
 }
 
-function saveCard(command: Command, user: string|null) {
+function saveCard(command: Command, user: string | null) {
     if (user == null) {
         alert("Sign in to save commands");
         return;
@@ -98,5 +97,3 @@ function saveCard(command: Command, user: string|null) {
     });
     localStorage.setItem("commands", JSON.stringify(commands));
 }
-
-// export default Card;
