@@ -37,10 +37,12 @@ const App: React.FC = () => {
     </Routes>
     <footer>
       <span>
-        FFmpeg Helper by Joel Demars <a href='https://github.com/joeldemars/startup'>Source</a> [ BADGE ]
+        <a href='https://github.com/joeldemars/startup'>FFmpeg Helper by Joel Demars</a>
+        <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/t/joeldemars/startup" />
       </span>
       <span>
-        <a href='https://github.com/FFmpeg/FFmpeg'>FFmpeg source</a> [ BADGE ]
+        <a href='https://github.com/FFmpeg/FFmpeg'>FFmpeg source</a>
+        <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/t/ffmpeg/ffmpeg" />
       </span>
     </footer>
   </BrowserRouter>;
