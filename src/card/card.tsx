@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { AudioCodec, Command, Container, VideoCodec } from '../command/command';
 import { useNavigate } from 'react-router-dom';
+import { addCommand, markNewSave } from '../api/api';
 
 interface CardProps {
     id: string;
@@ -80,10 +81,9 @@ function saveCard(command: Command, user: string | null) {
         alert("Sign in to save commands");
         return;
     }
-    let commands: Command[] = JSON.parse(localStorage.getItem("commands") ?? "[]");
-    let oldIndex = commands.findIndex((c) => c.id == command.id);
-    commands[oldIndex].saves++;
-    commands.push({
+
+    markNewSave(command.id);
+    addCommand({
         id: crypto.randomUUID().toString(),
         title: command.title,
         author: user,
@@ -95,5 +95,4 @@ function saveCard(command: Command, user: string | null) {
         vcodec: command.vcodec,
         outfile: command.outfile,
     });
-    localStorage.setItem("commands", JSON.stringify(commands));
 }

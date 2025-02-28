@@ -7,13 +7,8 @@ import Community from './community/community';
 import Saved from './saved/saved';
 import Login from './login/login';
 
-interface Account {
-  email: string,
-  password: string,
-}
-
 const App: React.FC = () => {
-  const [user, updateUser] = React.useState<string|null>(null);
+  const [user, updateUser] = React.useState<string | null>(null);
 
   return <BrowserRouter>
     <header>
@@ -26,8 +21,8 @@ const App: React.FC = () => {
           <NavLink className="nav-link" to="/">Home</NavLink>
           <NavLink className="nav-link" to="community">Community</NavLink>
           <NavLink className="nav-link" to="saved">Saved</NavLink>
-          { 
-            user == null 
+          {
+            user == null
               ? <NavLink className="nav-link" to="login">Log In</NavLink>
               : <NavLink className="nav-link" to="login" onClick={() => updateUser(null)}>Log Out</NavLink>
           }

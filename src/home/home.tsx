@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Command, Container, AudioCodec, VideoCodec, generateCommand } from '../command/command';
 import './home.css';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { addCommand, updateCommand } from '../api/api';
 
 interface HomeProps {
     user: string | null;
@@ -32,7 +33,7 @@ const Home: React.FC<HomeProps> = ({user}) => {
         if (title == null) return;
 
         let newCommand = {
-            id: id ?? crypto.randomUUID().toString(),
+            id: id,
             author: user,
             title: title,
             saves: saves,
@@ -44,14 +45,13 @@ const Home: React.FC<HomeProps> = ({user}) => {
             outfile: outfile,
         };
 
-        let commands: Command[] = JSON.parse(localStorage.getItem("commands") ?? "[]");
-        let index = commands.findIndex((command) => command.id == id);
-        if (index == -1) {
-            commands.push(newCommand);
+        if (id == null) {
+            newCommand.id = crypto.randomUUID.toString();
+            addCommand(newCommand as Command);
         } else {
-            commands[index] = newCommand;
+            updateCommand(newCommand as Command);
         }
-        localStorage.setItem("commands", JSON.stringify(commands));
+
         navigate("/saved");
     }
 

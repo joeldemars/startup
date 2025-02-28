@@ -2,18 +2,19 @@ import * as React from 'react';
 import { Card } from '../card/card';
 import './community.css';
 import { Command } from '../command/command';
+import { addCommand, getCommands } from '../api/api';
+
 
 interface CommunityProps {
     user: string | null;
 }
 
 const Community: React.FC<CommunityProps> = ({ user }) => {
-    const [commands, updateCommands] = React.useState(JSON.parse(localStorage.getItem("commands") ?? "[]"));
+    const [commands, updateCommands] = React.useState(getCommands());
 
     function generateRandomCommands(): number {
         return setInterval(() => {
-            let commands: Command[] = JSON.parse(localStorage.getItem("commands") ?? "[]");
-            commands.push({
+            addCommand({
                 id: crypto.randomUUID().toString(),
                 title: `Generated Command ${commands.length}`,
                 author: "Random",
@@ -25,8 +26,7 @@ const Community: React.FC<CommunityProps> = ({ user }) => {
                 vcodec: "avc",
                 outfile: "out",
             });
-            localStorage.setItem("commands", JSON.stringify(commands));
-            updateCommands(commands);
+            updateCommands(getCommands());
         }, 5000);
     }
 
@@ -38,12 +38,6 @@ const Community: React.FC<CommunityProps> = ({ user }) => {
     return <main id="community">
         {commands.map((command: Command) => <Card key={command.id} {...command} user={user} />)}
     </main>;
-}
-
-function generateRandomCommands() {
-    setInterval(() => {
-
-    }, 5000);
 }
 
 export default Community;
