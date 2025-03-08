@@ -3,7 +3,7 @@ main#login {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('logo_transparent.svg');
+    background-image: url('/logo_transparent.svg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
