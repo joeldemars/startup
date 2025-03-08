@@ -31,3 +31,29 @@ export function updateCommand(command: Command) {
     commands[index] = command;
     setCommands(commands);
 }
+
+export async function authenticate(email: string, password: string): Promise<Response> {
+    return fetch('/api/login', {
+        method: 'POST',
+        body: JSON.stringify({
+            email: email,
+            password: password,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    });
+}
+
+export async function register(email: string, password: string): Promise<Response> {
+    return fetch('/api/register', {
+        method: 'POST',
+        body: JSON.stringify({
+            email: email,
+            password: password,
+        }),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    });
+}
