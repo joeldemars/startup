@@ -40,7 +40,7 @@ export async function authenticate(email: string, password: string): Promise<Res
             password: password,
         }),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         },
     });
 }
@@ -53,7 +53,7 @@ export async function register(email: string, password: string): Promise<Respons
             password: password,
         }),
         headers: {
-            'Content-type': 'application/json; charset=UTF-8',
+            'Content-Type': 'application/json; charset=UTF-8',
         },
     });
 }
