@@ -11,21 +11,34 @@ app.use(express.json());
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.post('/api/login', async (req, res) => {
-    res.sendStatus(200);
+    res.sendStatus(await logIn(req.body.email, req.body.password));
 });
 
 app.post('/api/register', async (req, res) => {
-    res.sendStatus(addUser(req.body.email, req.body.password));
+    res.sendStatus(await addUser(req.body.email, req.body.password));
 })
 
-function addUser(email, password) {
+async function addUser(email, password) {
     if (users.some((user) => user.email == email)) {
         return 409;
     } else {
         users.push({
             email: email,
-            password: bcrypt.hash(password, 10),
+            password: await bcrypt.hash(password, 10),
         });
         return 200;
+    }
+}
+
+async function logIn(email, password) {
+    let user = users.find((user) => user.email == email);
+    if (user == undefined) {
+        return 400;
+    } else {
+        if (await bcrypt.compare(password, user.password)) {
+            return 200;
+        } else {
+            return 403;
+        }
     }
 }
