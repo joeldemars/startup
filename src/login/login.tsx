@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
+import { authenticate, register } from '../api/api';
 
 interface Account {
     email: string,
@@ -17,17 +18,23 @@ const Login: React.FC<LoginProps> = ({callback}) => {
 
     const navigate = useNavigate();
 
-    const tryCreateAccount = (email: string, password: string) => {
-        if (createAccount(email, password)) {
-            if (logIn(email, password)) {
-                callback(email);
-                navigate("/home");
-            }
+    const tryCreateAccount = async (email: string, password: string) => {
+        let response = await register(email, password);
+        if (response.status == 409) {
+            alert("A user has already registered with the given email address");
+        } else if (response.status == 200) {
+            callback(email);
+            navigate("/home");
         }
     };
 
-    const tryLogIn = (email: string, password: string) => {
-        if (logIn(email, password)) {
+    const tryLogIn = async (email: string, password: string) => {
+        let response = await authenticate(email, password);
+        if (response.status == 400) {
+            alert("Email not found");
+        } else if (response.status == 403) {
+            alert("Password incorrect");
+        } else if (response.status == 200) {
             callback(email);
             navigate("/home");
         }
@@ -54,37 +61,6 @@ const Login: React.FC<LoginProps> = ({callback}) => {
             </div>
         </div>
     </main>;
-}
-
-function createAccount(email: string, password: string): boolean {
-    let accounts: Account[] = JSON.parse(localStorage.getItem("accounts") ?? "[]");
-    if (accounts.some((account) => account.email == email)) {
-        alert("A user has already registered with the given email address");
-        return false;
-    } else {
-        accounts.push({
-            email: email,
-            password: password,
-        });
-        localStorage.setItem("accounts", JSON.stringify(accounts));
-        return true;
-    }
-}
-
-function logIn(email: string, password: string): boolean {
-    let accounts: Account[] = JSON.parse(localStorage.getItem("accounts") ?? "[]");
-    let account = accounts.find((account) => account.email == email);
-    if (account != null) {
-        if (account.password != password) {
-            alert("Password incorrect");
-            return false;
-        } else {
-            return true;
-        }
-    } else {
-        alert("Email not found");
-        return false;
-    }
 }
 
 export default Login;
