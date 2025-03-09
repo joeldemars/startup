@@ -1,13 +1,17 @@
 import { Command } from "../command/command";
 
 export function addCommand(command: Command) {
-    // let commands = getCommands();
-    // commands.push(command);
-    // setCommands(commands);
+    fetch('/api/commands', {
+        method: 'POST',
+        body: JSON.stringify(command),
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    });
 }
 
 export async function getCommands(): Promise<Command[]> {
-    return fetch('api/commands', {
+    return fetch('/api/commands', {
         method: 'GET',
     }).then(async (response) =>
         JSON.parse(await response.text())
