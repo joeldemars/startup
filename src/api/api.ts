@@ -1,35 +1,47 @@
 import { Command } from "../command/command";
 
 export function addCommand(command: Command) {
-    let commands = getCommands();
-    commands.push(command);
-    setCommands(commands);
+    // let commands = getCommands();
+    // commands.push(command);
+    // setCommands(commands);
 }
 
-export function getCommands(): Command[] {
-    return JSON.parse(localStorage.getItem("commands") ?? "[]");
+export async function getCommands(): Promise<Command[]> {
+    return fetch('api/commands', {
+        method: 'GET',
+    }).then(async (response) =>
+        JSON.parse(await response.text())
+    );
 }
 
 export function setCommands(commands: Command[]) {
     localStorage.setItem("commands", JSON.stringify(commands));
 }
 
-export function getUserCommands(user: String) {
-    return getCommands().filter((command) => command.author == user);
+export async function getUserCommands(user: String | null) {
+    if (user == null) {
+        return [];
+    } else {
+        return getCommands().then(
+            (commands) => commands.filter(
+                (command) => command.author == user
+            )
+        );
+    }
 }
 
 export function markNewSave(id: string) {
-    let commands = getCommands();
-    let index = commands.findIndex((command) => command.id == id);
-    commands[index].saves++;
-    setCommands(commands);
+    // let commands = getCommands();
+    // let index = commands.findIndex((command) => command.id == id);
+    // commands[index].saves++;
+    // setCommands(commands);
 }
 
 export function updateCommand(command: Command) {
-    let commands = getCommands();
-    let index = commands.findIndex((c) => c.id == command.id);
-    commands[index] = command;
-    setCommands(commands);
+    // let commands = getCommands();
+    // let index = commands.findIndex((c) => c.id == command.id);
+    // commands[index] = command;
+    // setCommands(commands);
 }
 
 export async function authenticate(email: string, password: string): Promise<Response> {

@@ -4,6 +4,12 @@ const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
 
 let users = [];
+let commands = [
+    {
+        name: 'Command name',
+        author: 'j',
+    }
+];
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 const app = express();
@@ -54,12 +60,13 @@ app.delete('/api/logout', (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('*', (req, res) => {
-    console.log('hit');
-    console.log(__dirname);
-    res.sendFile(__dirname + '/public/index.html');
+app.get('/api/commands', (req, res) => {
+    res.send(commands);
 });
 
+app.get('*', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
 
 function setAuthCookie(res, user) {
     user.token = uuid.v4();
