@@ -46,7 +46,7 @@ const Home: React.FC<HomeProps> = ({user}) => {
         };
 
         if (id == null) {
-            newCommand.id = crypto.randomUUID.toString();
+            newCommand.id = crypto.randomUUID().toString();
             addCommand(newCommand as Command);
         } else {
             updateCommand(newCommand as Command);

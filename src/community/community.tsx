@@ -21,7 +21,7 @@ const Community: React.FC<CommunityProps> = ({ user }) => {
     );
 
     return <main id="community">
-        {commands.map((command: Command) => <Card key={command.id} {...command} user={user} />)}
+        {commands.map((command) => <Card key={command.id} {...command} user={user} />)}
     </main>;
 }
 

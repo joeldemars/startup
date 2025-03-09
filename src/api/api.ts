@@ -18,10 +18,6 @@ export async function getCommands(): Promise<Command[]> {
     );
 }
 
-export function setCommands(commands: Command[]) {
-    localStorage.setItem("commands", JSON.stringify(commands));
-}
-
 export async function getUserCommands(user: String | null) {
     if (user == null) {
         return [];
@@ -35,17 +31,25 @@ export async function getUserCommands(user: String | null) {
 }
 
 export function markNewSave(id: string) {
-    // let commands = getCommands();
-    // let index = commands.findIndex((command) => command.id == id);
-    // commands[index].saves++;
-    // setCommands(commands);
+    fetch('/api/save-command', {
+        method: 'PUT',
+        body: JSON.stringify({
+            id: id,
+        }),
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        }
+    });
 }
 
 export function updateCommand(command: Command) {
-    // let commands = getCommands();
-    // let index = commands.findIndex((c) => c.id == command.id);
-    // commands[index] = command;
-    // setCommands(commands);
+    fetch('/api/commands', {
+        method: 'PUT',
+        body: JSON.stringify(command),
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8',
+        },
+    });
 }
 
 export async function authenticate(email: string, password: string): Promise<Response> {

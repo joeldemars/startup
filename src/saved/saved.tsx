@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card } from '../card/card';
 import { Command } from '../command/command';
 import './saved.css';
-import { getUserCommands, markNewSave } from '../api/api';
+import { getUserCommands } from '../api/api';
 
 interface SavedProps {
     user: string | null;

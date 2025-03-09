@@ -66,7 +66,29 @@ app.post('/api/commands', (req, res) => {
         commands.push(req.body);
         res.sendStatus(200);    
     }
-})
+});
+
+app.put('/api/commands', (req, res) => {
+    if (!validateToken(req.cookies['token'])) {
+        res.sendStatus(401);
+    } else {
+        let index = commands.findIndex((command) => command.id == req.body.id);
+        if (index != -1) {
+            commands[index] = req.body;
+        }
+        res.sendStatus(200);
+    }
+});
+
+app.put('/api/save-command', (req, res) => {
+    if (!validateToken(req.cookies['token'])) {
+        res.sendStatus(401);
+    } else {
+        let command = commands.find((command) => command.id == req.body.id);
+        command.saves++;
+        res.sendStatus(200);
+    }
+});
 
 app.get('*', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');

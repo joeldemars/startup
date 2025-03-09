@@ -33,7 +33,7 @@ export const Card: React.FC<CardProps> = (props) => {
                 Copy
             </button>
             {
-                props.user == null
+                props.user == props.author
                     ? <EditButton {...props} />
                     : <SaveButton {...props} />
             }
