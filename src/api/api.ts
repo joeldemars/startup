@@ -57,3 +57,9 @@ export async function register(email: string, password: string): Promise<Respons
         },
     });
 }
+
+export async function endSession(): Promise<Response> {
+    return fetch('/api/logout', {
+        method: 'DELETE',
+    })
+}

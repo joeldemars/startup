@@ -2,6 +2,7 @@ import * as React from 'react';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
+import { endSession } from './api/api';
 import Home from './home/home';
 import Community from './community/community';
 import Saved from './saved/saved';
@@ -9,6 +10,11 @@ import Login from './login/login';
 
 const App: React.FC = () => {
   const [user, updateUser] = React.useState<string | null>(null);
+
+  const logout = () => {
+    endSession();
+    updateUser(null);
+  }
 
   return <BrowserRouter>
     <header>
@@ -24,7 +30,7 @@ const App: React.FC = () => {
           {
             user == null
               ? <NavLink className="nav-link" to="login">Log In</NavLink>
-              : <NavLink className="nav-link" to="login" onClick={() => updateUser(null)}>Log Out</NavLink>
+              : <NavLink className="nav-link" to="login" onClick={() => logout()}>Log Out</NavLink>
           }
         </menu>
       </nav>
