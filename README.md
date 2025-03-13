@@ -111,21 +111,19 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Node.js/Express HTTP service** - I did not complete this part of the deliverable.
-- [ ] **Static middleware for frontend** - I did not complete this part of the deliverable.
-- [ ] **Calls to third party endpoints** - I did not complete this part of the deliverable.
-- [ ] **Backend service endpoints** - I did not complete this part of the deliverable.
-- [ ] **Frontend calls service endpoints** - I did not complete this part of the deliverable.
+- [x] **Node.js/Express HTTP service** - Node.js server in service/index.js handles static files and APIs
+- [x] **Static middleware for frontend** - Express middleware serves build react files
+- [x] **Calls to third party endpoints** - Footer contains badges from shields.io (src/app.tsx), site generates custom QR codes via qrserver.com (src/qrcode/qrcode.tsx)
+- [x] **Backend service endpoints** - Node.js server contains API endpoints accepting several HTTP methods
+- [x] **Frontend calls service endpoints** - Frontend uses API endpoints for registration/login and getting/saving commands (src/api/api.ts)
+- [x] **Supports registration, login, logout, and restricted endpoint** - Users can log in and can only save commands when logged in
 
 ## 🚀 DB/Login deliverable
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **User registration** - I did not complete this part of the deliverable.
-- [ ] **User login and logout** - I did not complete this part of the deliverable.
 - [ ] **Stores data in MongoDB** - I did not complete this part of the deliverable.
 - [ ] **Stores credentials in MongoDB** - I did not complete this part of the deliverable.
-- [ ] **Restricts functionality based on authentication** - I did not complete this part of the deliverable.
 
 ## 🚀 WebSocket deliverable
 
