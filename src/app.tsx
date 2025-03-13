@@ -7,6 +7,7 @@ import Home from './home/home';
 import Community from './community/community';
 import Saved from './saved/saved';
 import Login from './login/login';
+import QrCode from './qrcode/qrcode';
 
 const App: React.FC = () => {
   const [user, updateUser] = React.useState<string | null>(null);
@@ -39,6 +40,7 @@ const App: React.FC = () => {
       <Route path="/community" element={<Community user={user} />} />
       <Route path="/saved" element={<Saved user={user} />} />
       <Route path="/login" element={<Login callback={(user: string) => updateUser(user)} />} />
+      <Route path="/qrcode" element={<QrCode />} />
       <Route path="*" element={<Home user={user} />} />
     </Routes>
     <footer>

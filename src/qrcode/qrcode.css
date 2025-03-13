@@ -1,0 +1,10 @@
+main#qrcode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.qr-card {
+    padding: 16px;
+    max-width: 360px;
+}

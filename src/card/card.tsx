@@ -18,6 +18,8 @@ interface CardProps {
 }
 
 export const Card: React.FC<CardProps> = (props) => {
+    const navigate = useNavigate();
+
     return <div className="card command-card">
         <h4 className="card-title">{props.title}</h4>
         <p>{props.saves == 1 ? "1 save" : props.saves + " saves"}</p>
@@ -25,6 +27,13 @@ export const Card: React.FC<CardProps> = (props) => {
         <code>$ {props.command}</code>
         <br />
         <div>
+            <button
+                type='button'
+                className="btn btn-outline-light card-button"
+                onClick={() => navigate('/qrcode?command=' + props.command)}
+            >
+                QR Code
+            </button>
             <button
                 type='button'
                 className="btn btn-outline-light card-button"
