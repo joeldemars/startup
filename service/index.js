@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
+const db = require('./database.js');
 
 let users = [];
 let commands = [];
@@ -55,15 +56,15 @@ app.delete('/api/logout', (req, res) => {
     res.sendStatus(200);
 });
 
-app.get('/api/commands', (req, res) => {
-    res.send(commands);
+app.get('/api/commands', async (req, res) => {
+    res.send(await db.getCommands());
 });
 
 app.post('/api/commands', (req, res) => {
     if (!validateToken(req.cookies['token'])) {
         res.sendStatus(401);
     } else {
-        commands.push(req.body);
+        db.addCommand(req.body);
         res.sendStatus(200);    
     }
 });
@@ -72,20 +73,18 @@ app.put('/api/commands', (req, res) => {
     if (!validateToken(req.cookies['token'])) {
         res.sendStatus(401);
     } else {
-        let index = commands.findIndex((command) => command.id == req.body.id);
-        if (index != -1) {
-            commands[index] = req.body;
-        }
+        db.updateCommand(req.body);
         res.sendStatus(200);
     }
 });
 
-app.put('/api/save-command', (req, res) => {
+app.put('/api/save-command', async (req, res) => {
     if (!validateToken(req.cookies['token'])) {
         res.sendStatus(401);
     } else {
-        let command = commands.find((command) => command.id == req.body.id);
+        let command = await db.getCommand(req.body.id);
         command.saves++;
+        db.updateCommand(command);
         res.sendStatus(200);
     }
 });

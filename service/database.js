@@ -10,23 +10,44 @@ const commands = db.collection('commands');
 (async () => {
     try {
       await db.command({ ping: 1 });
-      console.log(`Connect to database`);
+      console.log(`Connected to database`);
     } catch (ex) {
       console.log(`Unable to connect to database with ${url} because ${ex.message}`);
       process.exit(1);
     }
 })();
 
-function getUser(email) {}
+function getUser(email) {
+    // return users.findOne({ email: email });
+}
 
-function getUserByToken(token) {}
+function getUserByToken(token) {
+    // return users.findOne({})
+}
 
 function addUser(user) {}
 
 function updateUser(user) {}
 
-function getCommands() {}
+async function getCommands() {
+    return await commands.find({}).toArray();
+}
 
-function addCommand() {}
+async function getCommand(id) {
+    return await commands.findOne({ id: id });
+}
 
-function updateCommand() {}
+async function addCommand(command) {
+    await commands.insertOne(command);
+}
+
+async function updateCommand(command) {
+    await commands.updateOne({ id: command.id }, { $set: { ...command } });
+}
+
+module.exports = {
+    getCommands,
+    getCommand,
+    addCommand,
+    updateCommand,
+};
