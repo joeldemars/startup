@@ -17,17 +17,21 @@ const commands = db.collection('commands');
     }
 })();
 
-function getUser(email) {
-    // return users.findOne({ email: email });
+async function getUser(email) {
+    return await users.findOne({ email: email });
 }
 
-function getUserByToken(token) {
-    // return users.findOne({})
+async function getUserByToken(token) {
+    return await users.findOne({ token: token });
 }
 
-function addUser(user) {}
+async function addUser(user) {
+    await users.insertOne(user);
+}
 
-function updateUser(user) {}
+async function updateUser(user) {
+    await users.updateOne({ email: user.email }, { $set: { ...user } });
+}
 
 async function getCommands() {
     return await commands.find({}).toArray();
@@ -46,6 +50,10 @@ async function updateCommand(command) {
 }
 
 module.exports = {
+    getUser,
+    getUserByToken,
+    addUser,
+    updateUser,
     getCommands,
     getCommand,
     addCommand,

@@ -4,9 +4,6 @@ const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
 const db = require('./database.js');
 
-let users = [];
-let commands = [];
-
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 const app = express();
 
@@ -16,9 +13,9 @@ app.use(cookieParser());
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
 app.post('/api/login', async (req, res) => {
-    let user = users.find((user) => user.email == req.body.email);
+    let user = await db.getUser(req.body.email);
     let status;
-    if (user == undefined) {
+    if (user == null) {
         status = 400;
     } else {
         if (await bcrypt.compare(req.body.password, user.password)) {
@@ -33,24 +30,26 @@ app.post('/api/login', async (req, res) => {
 
 app.post('/api/register', async (req, res) => {
     let status;
-    if (users.some((user) => user.email == req.body.email)) {
+    if (await db.getUser(req.body.email) != null) {
         status = 409;
     } else {
-        users.push({
+        let user = {
             email: req.body.email,
             password: await bcrypt.hash(req.body.password, 10),
-        });
+        };
+        db.addUser(user);
         status = 200;
-        setAuthCookie(res, users[users.length - 1]);
+        setAuthCookie(res, user);
     }
     res.sendStatus(status);
 });
 
 app.delete('/api/logout', (req, res) => {
     let token = req.cookies['token'];
-    let user = users.find((user) => user.token == token);
-    if (user != undefined) {
-        user.token = undefined;
+    let user = db.getUserByToken(token);
+    if (user != null) {
+        user.token = null;
+        db.updateUser(user);
     }
     res.clearCookie('token');
     res.sendStatus(200);
@@ -103,5 +102,5 @@ function setAuthCookie(res, user) {
 }
 
 function validateToken(token) {
-    return users.some((user) => user.token == token);
+    return db.getUserByToken(token) != null;
 }
