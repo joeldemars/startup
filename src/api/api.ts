@@ -83,3 +83,8 @@ export async function endSession(): Promise<Response> {
         method: 'DELETE',
     })
 }
+
+export interface Message {
+    type: 'add' | 'update';
+    command: Command;
+}

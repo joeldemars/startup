@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Card } from '../card/card';
 import './community.css';
 import { Command } from '../command/command';
-import { getCommands } from '../api/api';
+import { getCommands, Message } from '../api/api';
 
 
 interface CommunityProps {
@@ -12,11 +12,35 @@ interface CommunityProps {
 const Community: React.FC<CommunityProps> = ({ user }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
-    React.useEffect(() => {
-        (async () => {
-            updateCommands(await getCommands());
-        })();
-    },
+    const handleMessage = (message: Message) => {
+        if (message.type == 'add') {
+            updateCommands([...commands, message.command]);
+        } else {
+            let index = commands.findIndex((command) => command.id == message.command.id);
+            if (index == -1) {
+                updateCommands([...commands, message.command]);
+            } else {
+                commands[index] = message.command;
+                updateCommands(commands);
+            }
+        }
+    }
+
+    React.useEffect(
+        () => {
+            (async () => updateCommands(await getCommands()))();
+        },
+        [],
+    );
+
+    React.useEffect(
+        () => {
+            const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
+            const socket = new WebSocket(`${protocol}://${window.location.host}`);
+            socket.onmessage = (event) => handleMessage(JSON.parse(event.data) as Message);
+
+            return () => socket.close();
+        },
         [],
     );
 
