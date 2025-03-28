@@ -67,6 +67,7 @@ app.post('/api/commands', (req, res) => {
         res.sendStatus(401);
     } else {
         db.addCommand(req.body);
+        notifyClients('add', req.body);
         res.sendStatus(200);    
     }
 });
@@ -76,6 +77,7 @@ app.put('/api/commands', (req, res) => {
         res.sendStatus(401);
     } else {
         db.updateCommand(req.body);
+        notifyClients('update', req.body);
         res.sendStatus(200);
     }
 });
@@ -87,6 +89,7 @@ app.put('/api/save-command', async (req, res) => {
         let command = await db.getCommand(req.body.id);
         command.saves++;
         db.updateCommand(command);
+        notifyClients('update', command);
         res.sendStatus(200);
     }
 });
@@ -124,3 +127,12 @@ socketServer.on('connection', (socket) => {
         }
     }, 10000);
 });
+
+function notifyClients(messageType, command) {
+    for (const client of socketServer.clients) {
+        client.send(JSON.stringify({
+            type: messageType,
+            command: command,
+        }));
+    }
+}
