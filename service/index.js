@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const uuid = require('uuid');
 const cookieParser = require('cookie-parser');
 const db = require('./database.js');
+const { WebSocketServer } = require('ws');
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 const app = express();
@@ -10,7 +11,9 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cookieParser());
-app.listen(port, () => console.log(`Listening on port ${port}`));
+const server = app.listen(port, () => console.log(`Listening on port ${port}`));
+const socketServer = new WebSocketServer({ server });
+
 
 app.post('/api/login', async (req, res) => {
     let user = await db.getUser(req.body.email);
@@ -104,3 +107,20 @@ function setAuthCookie(res, user) {
 function validateToken(token) {
     return db.getUserByToken(token) != null;
 }
+
+socketServer.on('connection', (socket) => {
+    socket.isAlive = true;
+
+    socket.on('pong', () => socket.isAlive = true);
+
+    setInterval(() => {
+        for (const client of socketServer.clients) {
+            if (!client.isAlive) {
+                client.terminate();
+            } else {
+                client.isAlive = false;
+                client.ping();
+            }
+        }
+    }, 10000);
+});
