@@ -13,17 +13,19 @@ const Community: React.FC<CommunityProps> = ({ user }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
     const handleMessage = (message: Message) => {
-        if (message.type == 'add') {
-            updateCommands([...commands, message.command]);
-        } else {
-            let index = commands.findIndex((command) => command.id == message.command.id);
-            if (index == -1) {
-                updateCommands([...commands, message.command]);
+        updateCommands((commands) => {
+            if (message.type == 'add') {
+                return [...commands, message.command];
             } else {
-                commands[index] = message.command;
-                updateCommands(commands);
+                let index = commands.findIndex((command) => command.id == message.command.id);
+                if (index == -1) {
+                    return [...commands, message.command];
+                } else {
+                    commands[index] = message.command;
+                    return commands;
+                }
             }
-        }
+        });
     }
 
     React.useEffect(
