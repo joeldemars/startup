@@ -129,8 +129,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Backend listens for WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Frontend makes WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **Data sent over WebSocket connection** - I did not complete this part of the deliverable.
-- [ ] **WebSocket data displayed** - I did not complete this part of the deliverable.
-- [ ] **Application is fully functional** - I did not complete this part of the deliverable.
+- [x] **Backend listens for WebSocket connection** - WebSocket server created in index.js
+- [x] **Frontend makes WebSocket connection** - Community and Saved pages create a WebSocket client
+- [x] **Data sent over WebSocket connection** - Clients notified when a command is edited, created, or saved
+- [x] **WebSocket data displayed** - Changes in commands reflected in real time on Community and Saved pages
+- [x] **Application is fully functional** - Users can create, save, and edit commands as intended
