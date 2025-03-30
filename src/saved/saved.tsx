@@ -11,21 +11,8 @@ interface SavedProps {
 const Saved: React.FC<SavedProps> = ({ user }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
-    const handleMessage = (message: Message) => {
-        updateCommands((commands) => {
-            if (message.command.author != user) return commands;
-            if (message.type == 'add') {
-                return [...commands, message.command];
-            } else {
-                let index = commands.findIndex((command) => command.id == message.command.id);
-                if (index == -1) {
-                    return [...commands, message.command];
-                } else {
-                    commands[index] = message.command;
-                    return commands;
-                }
-            }
-        });
+    const handleMessage = async (message: Message) => {
+        if (message.command.author == user) updateCommands(await getUserCommands(user));
     }
 
     React.useEffect(

@@ -12,20 +12,8 @@ interface CommunityProps {
 const Community: React.FC<CommunityProps> = ({ user }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
-    const handleMessage = (message: Message) => {
-        updateCommands((commands) => {
-            if (message.type == 'add') {
-                return [...commands, message.command];
-            } else {
-                let index = commands.findIndex((command) => command.id == message.command.id);
-                if (index == -1) {
-                    return [...commands, message.command];
-                } else {
-                    commands[index] = message.command;
-                    return commands;
-                }
-            }
-        });
+    const handleMessage = async (message: Message) => {
+        updateCommands(await getCommands());
     }
 
     React.useEffect(
