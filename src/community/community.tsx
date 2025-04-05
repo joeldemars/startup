@@ -14,7 +14,15 @@ const Community: React.FC<CommunityProps> = ({ user, socket }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
     const handleMessage = async (message: Message) => {
-        updateCommands(await getCommands());
+        if (message.type == 'add') {
+            updateCommands([...commands, message.command]);
+        } else {
+            const index = commands.findIndex((command) => command.id == message.command.id);
+            if (index != -1) {
+                commands[index] = message.command;
+                updateCommands(commands);
+            }
+        }
     }
 
     React.useEffect(

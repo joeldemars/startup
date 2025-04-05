@@ -11,7 +11,6 @@ import QrCode from './qrcode/qrcode';
 
 const App: React.FC = () => {
   const [user, updateUser] = React.useState<string | null>(null);
-  // const [socket, updateSocket] = React.useState<WebSocket | null>(null);
   const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
   const socket = new WebSocket(`${protocol}://${window.location.host}`);
 
@@ -19,14 +18,6 @@ const App: React.FC = () => {
     endSession();
     updateUser(null);
   }
-
-  // React.useEffect(
-  //     () => {
-  //         const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
-  //         updateSocket(new WebSocket(`${protocol}://${window.location.host}`));
-  //     },
-  //     [],
-  // );
 
   return <BrowserRouter>
     <header>
