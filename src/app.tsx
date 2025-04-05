@@ -11,11 +11,22 @@ import QrCode from './qrcode/qrcode';
 
 const App: React.FC = () => {
   const [user, updateUser] = React.useState<string | null>(null);
+  // const [socket, updateSocket] = React.useState<WebSocket | null>(null);
+  const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
+  const socket = new WebSocket(`${protocol}://${window.location.host}`);
 
   const logout = () => {
     endSession();
     updateUser(null);
   }
+
+  // React.useEffect(
+  //     () => {
+  //         const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
+  //         updateSocket(new WebSocket(`${protocol}://${window.location.host}`));
+  //     },
+  //     [],
+  // );
 
   return <BrowserRouter>
     <header>
@@ -37,8 +48,8 @@ const App: React.FC = () => {
       </nav>
     </header>
     <Routes>
-      <Route path="/community" element={<Community user={user} />} />
-      <Route path="/saved" element={<Saved user={user} />} />
+      <Route path="/community" element={<Community user={user} socket={socket} />} />
+      <Route path="/saved" element={<Saved user={user} socket={socket} />} />
       <Route path="/login" element={<Login callback={(user: string) => updateUser(user)} />} />
       <Route path="/qrcode" element={<QrCode />} />
       <Route path="*" element={<Home user={user} />} />

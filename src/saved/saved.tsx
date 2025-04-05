@@ -6,9 +6,10 @@ import { getUserCommands, Message } from '../api/api';
 
 interface SavedProps {
     user: string | null;
+    socket: WebSocket;
 }
 
-const Saved: React.FC<SavedProps> = ({ user }) => {
+const Saved: React.FC<SavedProps> = ({ user, socket }) => {
     const [commands, updateCommands] = React.useState<Command[]>([]);
 
     const handleMessage = async (message: Message) => {
@@ -24,11 +25,9 @@ const Saved: React.FC<SavedProps> = ({ user }) => {
 
     React.useEffect(
         () => {
-            const protocol = window.location.protocol == 'http:' ? 'ws' : 'wss';
-            const socket = new WebSocket(`${protocol}://${window.location.host}`);
             socket.onmessage = (event) => handleMessage(JSON.parse(event.data) as Message);
 
-            return () => socket.close();
+            return () => { socket.onmessage = () => {} };
         },
         [],
     );
